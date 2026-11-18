@@ -1,0 +1,1763 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>作業療法士 国家試験対策システム</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=M+PLUS+Rounded+1c:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* テーマ別CSS変数定義 */
+    :root, [data-theme="standard"] {
+      --bg-page: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-sub: #f1f5f9;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --primary: #4338ca;
+      --primary-hover: #3730a3;
+      --primary-light: #e0e7ff;
+      --primary-text: #3730a3;
+      --header-bg: #4338ca;
+      --header-active: #312e81;
+      --font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+      --radius: 0.75rem;
+    }
+    [data-theme="sakura"] {
+      --bg-page: #fff5f7;
+      --bg-card: #ffffff;
+      --bg-sub: #ffe4e8;
+      --text-main: #4a2532;
+      --text-muted: #8c5a6b;
+      --border-color: #fbcfe8;
+      --primary: #e11d48;
+      --primary-hover: #be123c;
+      --primary-light: #ffe4e6;
+      --primary-text: #be123c;
+      --header-bg: #f43f5e;
+      --header-active: #be123c;
+      --font-family: 'M PLUS Rounded 1c', sans-serif;
+      --radius: 1.25rem;
+    }
+    [data-theme="mint"] {
+      --bg-page: #f0fdf9;
+      --bg-card: #ffffff;
+      --bg-sub: #dcfce7;
+      --text-main: #144336;
+      --text-muted: #4b7a6c;
+      --border-color: #bbf7d0;
+      --primary: #0d9488;
+      --primary-hover: #0f766e;
+      --primary-light: #ccfbf1;
+      --primary-text: #0f766e;
+      --header-bg: #14b8a6;
+      --header-active: #0f766e;
+      --font-family: 'M PLUS Rounded 1c', sans-serif;
+      --radius: 1.25rem;
+    }
+    [data-theme="lavender"] {
+      --bg-page: #faf5ff;
+      --bg-card: #ffffff;
+      --bg-sub: #f3e8ff;
+      --text-main: #3b0764;
+      --text-muted: #7e22ce;
+      --border-color: #e9d5ff;
+      --primary: #9333ea;
+      --primary-hover: #7e22ce;
+      --primary-light: #f3e8ff;
+      --primary-text: #6b21a8;
+      --header-bg: #9333ea;
+      --header-active: #6b21a8;
+      --font-family: 'M PLUS Rounded 1c', sans-serif;
+      --radius: 1.25rem;
+    }
+    [data-theme="quest"] {
+      --bg-page: #2c1614;
+      --bg-card: #1c1917;
+      --bg-sub: #292524;
+      --text-main: #fef3c7;
+      --text-muted: #d6d3d1;
+      --border-color: #f59e0b;
+      --primary: #d97706;
+      --primary-hover: #b45309;
+      --primary-light: #451a03;
+      --primary-text: #fbbf24;
+      --header-bg: #292524;
+      --header-active: #d97706;
+      --font-family: 'DotGothic16', monospace;
+      --radius: 0.25rem;
+    }
+    [data-theme="dark"] {
+      --bg-page: #0f172a;
+      --bg-card: #1e293b;
+      --bg-sub: #334155;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border-color: #334155;
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --primary-light: #312e81;
+      --primary-text: #a5b4fc;
+      --header-bg: #1e293b;
+      --header-active: #4f46e5;
+      --font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+      --radius: 0.75rem;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      font-family: var(--font-family);
+      transition: background-color 0.25s, color 0.25s;
+    }
+    .t-card {
+      background-color: var(--bg-card);
+      border-color: var(--border-color);
+      border-radius: var(--radius);
+    }
+    .t-sub {
+      background-color: var(--bg-sub);
+      border-color: var(--border-color);
+    }
+    .t-muted { color: var(--text-muted); }
+    .t-border { border-color: var(--border-color); }
+    .t-primary {
+      background-color: var(--primary);
+      color: #ffffff;
+    }
+    .t-primary:hover { background-color: var(--primary-hover); }
+    .t-primary-badge {
+      background-color: var(--primary-light);
+      color: var(--primary-text);
+    }
+    .t-header { background-color: var(--header-bg); }
+    .t-header-active { background-color: var(--header-active) !important; }
+    .t-input {
+      background-color: var(--bg-card);
+      color: var(--text-main);
+      border-color: var(--border-color);
+    }
+
+    /* ==================== テーマ別デザイン強化CSS ==================== */
+    /* 1. さくらピンク：水玉ドット背景 ＋ ふわふわステッチ枠 ＋ ぷっくりボタン */
+    [data-theme="sakura"] body {
+      background-color: #fff5f7;
+      background-image: radial-gradient(#fbcfe8 1.5px, transparent 1.5px), radial-gradient(#fecdd3 1.5px, #fff5f7 1.5px);
+      background-size: 28px 28px;
+      background-position: 0 0, 14px 14px;
+    }
+    [data-theme="sakura"] .t-card {
+      border: 2px dashed #f9a8d4;
+      box-shadow: 0 6px 16px -4px rgba(244, 63, 94, 0.12);
+    }
+    [data-theme="sakura"] .t-primary {
+      border-radius: 9999px;
+      box-shadow: 0 4px 0 #be123c;
+      transform: translateY(0);
+    }
+    [data-theme="sakura"] .t-primary:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #be123c;
+    }
+    [data-theme="sakura"] header h1::before {
+      content: "🌸 ";
+    }
+
+    /* 2. ミントカフェ：方眼ノート風背景 ＋ カフェ看板風フレーム */
+    [data-theme="mint"] body {
+      background-color: #f0fdf9;
+      background-image:
+        linear-gradient(to right, rgba(20, 184, 166, 0.1) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(20, 184, 166, 0.1) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    [data-theme="mint"] .t-card {
+      border: 2px solid #5eead4;
+      box-shadow: 4px 4px 0px #99f6e4;
+    }
+    [data-theme="mint"] .t-primary {
+      border-radius: 0.75rem;
+      box-shadow: 0 3px 0 #0f766e;
+    }
+    [data-theme="mint"] header h1::before {
+      content: "☕ ";
+    }
+
+    /* 3. ラベンダー：斜めストライプ背景 ＋ ゆめかわ二重フレーム */
+    [data-theme="lavender"] body {
+      background-color: #faf5ff;
+      background-image: repeating-linear-gradient(
+        -45deg,
+        #faf5ff,
+        #faf5ff 12px,
+        #f3e8ff 12px,
+        #f3e8ff 24px
+      );
+    }
+    [data-theme="lavender"] .t-card {
+      border: 2px solid #d8b4fe;
+      box-shadow: 0 0 0 4px #ffffff, 0 8px 20px rgba(147, 51, 234, 0.12);
+    }
+    [data-theme="lavender"] .t-primary {
+      background: linear-gradient(135deg, #a855f7, #7e22ce);
+      border-radius: 9999px;
+    }
+    [data-theme="lavender"] header h1::before {
+      content: "✨ ";
+    }
+
+    /* 4. RPGクエスト風：暗めの赤茶色レンガ壁 ＋ ドラクエ風二重白枠ウィンドウ ＋ ゴールドボタン */
+    [data-theme="quest"] body {
+      background-color: #2c1614;
+      background-image:
+        linear-gradient(90deg, rgba(18, 8, 7, 0.85) 2px, transparent 2px),
+        linear-gradient(90deg, rgba(18, 8, 7, 0.85) 2px, transparent 2px),
+        linear-gradient(180deg, rgba(18, 8, 7, 0.9) 2px, rgba(92, 40, 34, 0.55) 2px, rgba(44, 22, 20, 0.7) 100%);
+      background-size: 48px 36px, 48px 36px, 48px 18px;
+      background-position: 0 0, 24px 18px, 0 0;
+    }
+    [data-theme="quest"] .t-card {
+      background-color: #1c1917;
+      border: 3px solid #fef3c7;
+      border-radius: 4px;
+      box-shadow: 0 0 0 3px #1c1917, 0 0 0 6px #f59e0b;
+    }
+    [data-theme="quest"] .t-primary {
+      background: linear-gradient(180deg, #f59e0b 0%, #b45309 100%);
+      color: #ffffff;
+      text-shadow: 1px 1px 0 #451a03;
+      border: 2px solid #fef3c7;
+      border-radius: 4px;
+      box-shadow: 0 3px 0 #78350f;
+      letter-spacing: 0.08em;
+    }
+    [data-theme="quest"] .t-primary:hover {
+      background: linear-gradient(180deg, #fbbf24 0%, #d97706 100%);
+    }
+    [data-theme="quest"] header h1::before {
+      content: "⚔️ ";
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <!-- ==================== 0. ログイン・新規登録画面 ==================== -->
+  <div id="auth-screen" class="min-h-screen flex items-center justify-center p-4">
+    <div class="t-card max-w-md w-full shadow-lg border p-8">
+      <div class="text-center mb-6">
+        <span class="inline-block t-primary-badge text-xs font-bold px-3 py-1 rounded-full mb-2">国家試験対策システム</span>
+        <h1 class="text-2xl font-bold">過去問トレーニング</h1>
+        <p class="text-xs t-muted mt-1">学籍番号（または教員ID）でログインしてください</p>
+      </div>
+
+      <div class="flex border-b t-border mb-6">
+        <button id="tab-login" onclick="switchAuthMode('login')" class="flex-1 py-2 text-sm font-bold border-b-2 border-indigo-600 text-indigo-600">ログイン</button>
+        <button id="tab-register" onclick="switchAuthMode('register')" class="flex-1 py-2 text-sm font-medium t-muted">初めての方（新規登録）</button>
+      </div>
+
+      <form id="auth-form" onsubmit="handleAuthSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold mb-1">学籍番号 / ユーザーID（半角英数字）</label>
+          <input type="text" id="auth-id" required pattern="[a-zA-Z0-9_\-]+" placeholder="例: 26001" class="t-input w-full border rounded-lg p-2.5 text-sm outline-none">
+        </div>
+
+        <div id="register-name-box" class="hidden">
+          <label class="block text-xs font-bold mb-1">氏名（教員画面に表示されます）</label>
+          <input type="text" id="auth-name" placeholder="例: 山田 太郎" class="t-input w-full border rounded-lg p-2.5 text-sm outline-none">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold mb-1">パスワード（6文字以上）</label>
+          <input type="password" id="auth-pass" required minlength="6" placeholder="6文字以上の半角英数字" class="t-input w-full border rounded-lg p-2.5 text-sm outline-none">
+        </div>
+
+        <div id="auth-error" class="hidden text-xs text-rose-600 bg-rose-50 border border-rose-200 p-2.5 rounded-lg"></div>
+
+        <button type="submit" id="auth-submit-btn" class="w-full t-primary font-bold py-3 rounded-lg shadow transition">
+          ログインする
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== メインアプリ画面 ==================== -->
+  <div id="app-screen" class="hidden">
+    <!-- ヘッダー -->
+    <header class="t-header text-white shadow-md sticky top-0 z-20">
+      <div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-2">
+        <div class="flex items-center space-x-2">
+          <h1 class="text-base md:text-lg font-bold tracking-wide">国試過去問演習</h1>
+          <span id="header-user-badge" class="text-xs bg-black/20 px-2.5 py-1 rounded-full"></span>
+        </div>
+        <nav class="flex flex-wrap items-center gap-1.5">
+          <button onclick="switchTab('setup')" id="nav-setup" class="px-3 py-1.5 rounded text-xs md:text-sm font-medium t-header-active">出題・課題</button>
+          <button onclick="switchTab('quiz')" id="nav-quiz" class="px-3 py-1.5 rounded text-xs md:text-sm font-medium hover:bg-white/10 hidden">演習中</button>
+          <button onclick="switchTab('analytics')" id="nav-analytics" class="px-3 py-1.5 rounded text-xs md:text-sm font-medium hover:bg-white/10">自分の成績</button>
+          <button onclick="openThemeModal()" class="px-3 py-1.5 rounded text-xs md:text-sm font-medium bg-white/15 hover:bg-white/25">🎨 着せ替え</button>
+          <button onclick="switchTab('teacher')" id="nav-teacher" class="hidden px-3 py-1.5 rounded text-xs md:text-sm font-bold bg-amber-400 text-slate-900 hover:bg-amber-300">教員管理</button>
+          <button onclick="handleLogout()" class="ml-1 px-2.5 py-1.5 rounded text-xs text-white/80 hover:text-white border border-white/30">ログアウト</button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-6">
+      <div id="status-banner" class="t-card border px-4 py-2.5 mb-6 text-xs md:text-sm">
+        問題データを読み込んでいます...
+      </div>
+
+      <!-- テーマ新規解放お祝いバナー -->
+      <div id="theme-unlock-toast" class="hidden mb-6 p-4 rounded-xl bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 text-slate-900 shadow-lg border-2 border-amber-500 flex flex-wrap justify-between items-center gap-3">
+        <div class="font-bold text-sm md:text-base" id="theme-unlock-msg"></div>
+        <button onclick="openThemeModal(); document.getElementById('theme-unlock-toast').classList.add('hidden');" class="px-4 py-1.5 bg-slate-900 text-white rounded-lg text-xs font-bold shadow">
+          さっそく着せ替える 🎨
+        </button>
+      </div>
+
+      <!-- ==================== 1. 出題設定＆配信課題画面 ==================== -->
+      <section id="view-setup" class="space-y-6">
+        <div class="t-card shadow-sm border p-6">
+          <div class="flex justify-between items-center mb-3">
+            <h2 class="text-lg font-bold flex items-center gap-2">📌 教員からの配信課題・小テスト</h2>
+            <button onclick="loadAssignmentsForStudent()" class="text-xs t-muted hover:underline">🔄 再読み込み</button>
+          </div>
+          <div id="student-assignments-list" class="space-y-3">
+            <p class="text-xs t-muted">配信中の課題を確認しています...</p>
+          </div>
+        </div>
+
+        <div class="t-card shadow-sm border p-6">
+          <div class="flex flex-wrap justify-between items-center gap-2 mb-4 border-b t-border pb-2">
+            <h2 class="text-lg font-bold">自主学習（条件を絞って演習）</h2>
+            <button type="button" onclick="clearStudentFilters()" class="px-3 py-1.5 t-sub border rounded-lg text-xs font-bold hover:opacity-80 transition">
+              🔄 条件をすべてクリア
+            </button>
+          </div>
+          <div class="space-y-4 mb-6">
+            <!-- 1. 実施回（複数選択） -->
+            <div>
+              <label class="block text-xs font-bold mb-1">1. 実施回（複数選択可・未選択なら全回）</label>
+              <div id="filter-year-box" class="t-input border rounded-lg p-2.5 flex flex-wrap gap-3 text-sm"></div>
+            </div>
+
+            <!-- 2. 科目（複数選択） -->
+            <div>
+              <label class="block text-xs font-bold mb-1">2. 科目（複数選択可・未選択なら全科目）</label>
+              <div id="filter-subject-box" class="t-input border rounded-lg p-2.5 flex flex-wrap gap-3 text-sm"></div>
+            </div>
+
+            <!-- 3. 大項目（複数選択） -->
+            <div>
+              <label class="block text-xs font-bold mb-1">3. 大項目（複数選択可・未選択なら全大項目）</label>
+              <div id="filter-major-box" class="t-input border rounded-lg p-2.5 flex flex-wrap gap-3 text-sm max-h-36 overflow-y-auto"></div>
+            </div>
+
+            <!-- 4. 中項目（複数選択） -->
+            <div>
+              <label class="block text-xs font-bold mb-1">4. 中項目（複数選択可・未選択なら全中項目）</label>
+              <div id="filter-minor-box" class="t-input border rounded-lg p-2.5 flex flex-wrap gap-3 text-sm max-h-40 overflow-y-auto"></div>
+            </div>
+          </div>
+
+          <div class="t-sub flex flex-wrap items-center justify-between gap-4 p-4 rounded-lg mb-6 border">
+            <div class="flex flex-wrap items-center gap-4">
+              <label class="inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="opt-random" class="h-4 w-4 rounded">
+                <span class="ml-2 text-sm font-medium">ランダム出題</span>
+              </label>
+              <label class="inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="opt-wrong-only" class="h-4 w-4 rounded">
+                <span class="ml-2 text-sm font-medium text-rose-500">過去に間違えた問題のみ</span>
+              </label>
+              <label class="inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="opt-unsolved-only" class="h-4 w-4 rounded">
+                <span class="ml-2 text-sm font-medium text-emerald-500">未解答の問題のみ</span>
+              </label>
+            </div>
+            <div class="text-sm font-bold">
+              該当: <span id="matched-count">0</span> 問
+            </div>
+          </div>
+
+          <button onclick="startFreeQuiz()" id="btn-start" class="w-full t-primary font-bold py-3.5 rounded-lg shadow transition">
+            この条件で自主演習を開始する
+          </button>
+        </div>
+      </section>
+
+      <!-- ==================== 2. 問題演習画面 ==================== -->
+      <section id="view-quiz" class="hidden">
+        <div id="quiz-mode-banner" class="hidden mb-4 p-3 rounded-lg bg-amber-100 border border-amber-300 text-amber-900 text-xs md:text-sm font-bold flex justify-between items-center">
+          <span id="quiz-mode-title"></span>
+          <span id="quiz-mode-type-badge" class="px-2 py-0.5 rounded bg-amber-800 text-white text-xs"></span>
+        </div>
+
+        <div class="t-card shadow-sm border p-6 mb-4">
+          <div class="flex flex-wrap justify-between items-center text-xs t-muted mb-3 gap-2">
+            <div class="flex flex-wrap items-center gap-1.5">
+              <span id="q-badge-year" class="t-primary-badge font-bold px-2.5 py-1 rounded"></span>
+              <span id="q-badge-cat" class="t-sub px-2.5 py-1 rounded border"></span>
+            </div>
+            <div class="font-bold">
+              進捗: <span id="q-progress"></span>
+            </div>
+          </div>
+
+          <div id="q-text" class="text-base md:text-lg font-medium leading-relaxed mb-4 whitespace-pre-wrap"></div>
+
+          <div class="mb-6 flex justify-center">
+            <img id="q-image" src="" alt="問題図表" class="max-h-80 rounded border t-border shadow-sm" onerror="this.style.display='none'">
+          </div>
+
+          <div id="q-multi-notice" class="hidden mb-3 text-xs font-bold text-amber-700 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded inline-block">
+            ※複数選択問題です（該当するものをすべて選択してください）
+          </div>
+
+          <div id="q-options" class="space-y-2.5 mb-6"></div>
+
+          <button onclick="submitAnswer()" id="btn-submit-answer" class="w-full t-primary font-bold py-3 rounded-lg shadow transition">
+            解答を確定する
+          </button>
+
+          <div id="q-result-box" class="hidden mt-6 pt-6 border-t t-border">
+            <div id="q-judge-banner" class="p-4 rounded-lg font-bold text-base md:text-lg mb-4"></div>
+            <div id="q-overall-exp-box" class="t-sub border rounded-lg p-4 mb-4">
+              <h3 class="text-xs font-bold mb-2">【問題全体の解説】</h3>
+              <p id="q-overall-exp" class="text-sm leading-relaxed whitespace-pre-wrap"></p>
+            </div>
+            <button onclick="nextQuestion()" id="btn-next-q" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-lg shadow transition">
+              次の問題へ進む →
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 小テスト完了後のまとめ採点画面 -->
+      <section id="view-test-summary" class="hidden space-y-6">
+        <div class="t-card shadow-sm border p-6 text-center">
+          <span class="inline-block bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full mb-2">提出完了</span>
+          <h2 id="test-summary-title" class="text-xl font-bold mb-2">小テスト結果</h2>
+          <div id="test-summary-score" class="text-3xl font-bold text-indigo-600 my-4"></div>
+          <p class="text-xs t-muted mb-6">結果は教員画面へ自動送信されました。以下で各問題の正誤と解説を確認できます。</p>
+          <button onclick="switchTab('setup')" class="t-primary px-6 py-2.5 rounded-lg text-sm font-bold">トップへ戻る</button>
+        </div>
+        <div id="test-summary-details" class="space-y-4"></div>
+      </section>
+
+      <!-- ==================== 3. 自分の成績・苦手分析画面 ==================== -->
+      <section id="view-analytics" class="hidden space-y-6">
+        <div class="t-card shadow-sm border p-6">
+          <h2 class="text-lg font-bold mb-4">あなたの学習サマリー</h2>
+          <div class="grid grid-cols-3 gap-4 text-center">
+            <div class="t-sub p-4 rounded-lg border">
+              <div class="text-xs t-muted">解答済み問題数</div>
+              <div id="stat-total" class="text-2xl font-bold mt-1">0問</div>
+            </div>
+            <div class="t-sub p-4 rounded-lg border">
+              <div class="text-xs t-muted">正解数</div>
+              <div id="stat-correct" class="text-2xl font-bold text-emerald-500 mt-1">0問</div>
+            </div>
+            <div class="t-sub p-4 rounded-lg border">
+              <div class="text-xs t-muted">総合正答率</div>
+              <div id="stat-rate" class="text-2xl font-bold mt-1">0%</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="t-card shadow-sm border p-6">
+          <h3 class="text-base font-bold mb-1">分野別 正答率ランキング（苦手順）</h3>
+          <p class="text-xs t-muted mb-4">大項目・中項目ごとの正答率が低い順に表示されます。</p>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-sm">
+              <thead>
+                <tr class="t-sub border-b">
+                  <th class="p-3">大項目</th>
+                  <th class="p-3">中項目</th>
+                  <th class="p-3 text-right">正解 / 解答</th>
+                  <th class="p-3 text-right">正答率</th>
+                  <th class="p-3 text-center">判定</th>
+                </tr>
+              </thead>
+              <tbody id="analytics-table-body" class="divide-y t-border"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 4. 教員専用ダッシュボード ==================== -->
+      <section id="view-teacher" class="hidden space-y-6">
+        <div class="flex flex-wrap gap-2 border-b t-border pb-3">
+          <button onclick="switchTeacherSubTab('grades')" id="t-tab-grades" class="px-4 py-2 rounded-lg text-xs md:text-sm font-bold t-primary">📊 全体成績一覧</button>
+          <button onclick="switchTeacherSubTab('create-assign')" id="t-tab-create-assign" class="px-4 py-2 rounded-lg text-xs md:text-sm font-bold t-card border">📝 課題作成・配信予約</button>
+          <button onclick="switchTeacherSubTab('manage-assign')" id="t-tab-manage-assign" class="px-4 py-2 rounded-lg text-xs md:text-sm font-bold t-card border">📋 配信済み課題の提出状況</button>
+        </div>
+
+        <!-- 4-A. 全体成績一覧 -->
+        <div id="t-view-grades" class="space-y-6">
+          <div class="t-card shadow-sm border p-6">
+            <div class="flex flex-wrap justify-between items-center gap-4 mb-4">
+              <div>
+                <h2 class="text-lg font-bold">学生別 自主学習成績一覧</h2>
+                <p class="text-xs t-muted">全学生の累計演習進捗・正答率・苦手分野をリアルタイム集計しています</p>
+              </div>
+              <div class="flex space-x-2">
+                <button onclick="loadTeacherDashboard()" class="px-3 py-2 t-sub text-xs font-bold rounded-lg border">🔄 最新に更新</button>
+                <button onclick="exportTeacherCSV()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg shadow">📥 CSV出力</button>
+              </div>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse text-sm">
+                <thead>
+                  <tr class="t-sub border-b">
+                    <th class="p-3">学籍番号</th>
+                    <th class="p-3">氏名</th>
+                    <th class="p-3 text-right">解答問題数</th>
+                    <th class="p-3 text-right">正解数</th>
+                    <th class="p-3 text-right">正答率</th>
+                    <th class="p-3">最弱中項目</th>
+                    <th class="p-3 text-right">最終学習日時</th>
+                  </tr>
+                </thead>
+                <tbody id="teacher-students-body" class="divide-y t-border"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="t-card shadow-sm border p-6">
+            <h3 class="text-base font-bold mb-1">学年全体の苦手分野（中項目別ワースト順）</h3>
+            <div class="overflow-x-auto mt-3">
+              <table class="w-full text-left border-collapse text-sm">
+                <thead>
+                  <tr class="t-sub border-b">
+                    <th class="p-3">大項目</th>
+                    <th class="p-3">中項目</th>
+                    <th class="p-3 text-right">延べ解答数</th>
+                    <th class="p-3 text-right">全体平均正答率</th>
+                  </tr>
+                </thead>
+                <tbody id="teacher-category-body" class="divide-y t-border"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4-B. 課題作成・定期配信予約 -->
+        <div id="t-view-create-assign" class="hidden space-y-6">
+          <div class="t-card shadow-sm border p-6">
+            <h2 class="text-lg font-bold mb-4 border-b t-border pb-2">新規課題の作成・定期配信予約</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div>
+                <label class="block text-xs font-bold mb-1">課題タイトル（必須）</label>
+                <input type="text" id="assign-title" placeholder="例: 第3回 神経内科学 確認小テスト" class="t-input w-full border rounded-lg p-2.5 text-sm">
+              </div>
+              <div>
+                <label class="block text-xs font-bold mb-1">出題モード</label>
+                <select id="assign-mode" class="t-input w-full border rounded-lg p-2.5 text-sm">
+                  <option value="practice">演習モード（1問ごとに正誤と解説を表示）</option>
+                  <option value="test">小テストモード（全問終了後にまとめて採点・結果表示）</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-bold mb-1">公開開始日時（予約設定・必須）</label>
+                <input type="datetime-local" id="assign-publish-at" class="t-input w-full border rounded-lg p-2.5 text-sm">
+                <p class="text-[11px] t-muted mt-1">※この日時になるまで学生の画面には表示されません</p>
+              </div>
+              <div>
+                <label class="block text-xs font-bold mb-1">提出締切日時（任意・空欄なら無期限）</label>
+                <input type="datetime-local" id="assign-deadline-at" class="t-input w-full border rounded-lg p-2.5 text-sm">
+              </div>
+            </div>
+
+            <div class="t-sub border rounded-lg p-4 mb-4">
+              <div class="flex flex-wrap justify-between items-center gap-2 mb-3">
+                <h3 class="text-sm font-bold">出題する問題を選定（現在選択中: <span id="selected-q-count" class="text-indigo-500 text-base">0</span> 問）</h3>
+                <div class="flex gap-2">
+                  <button type="button" onclick="selectAllSearchedQuestions()" class="px-2.5 py-1 bg-indigo-600 text-white rounded text-xs">表示中を全選択</button>
+                  <button type="button" onclick="clearAllSearchedQuestions()" class="px-2.5 py-1 bg-slate-500 text-white rounded text-xs">選択クリア</button>
+                </div>
+              </div>
+
+              <div class="space-y-2.5 mb-3">
+                <div>
+                  <label class="block text-[11px] font-bold mb-1">1. 実施回（複数選択可・未選択なら全回）</label>
+                  <div id="as-filter-year-box" class="t-input border rounded p-2 flex flex-wrap gap-2.5 text-xs"></div>
+                </div>
+                <div>
+                  <label class="block text-[11px] font-bold mb-1">2. 科目（複数選択可・未選択なら全科目）</label>
+                  <div id="as-filter-subject-box" class="t-input border rounded p-2 flex flex-wrap gap-2.5 text-xs"></div>
+                </div>
+                <div>
+                  <label class="block text-[11px] font-bold mb-1">3. 大項目（複数選択可・未選択なら全大項目）</label>
+                  <div id="as-filter-major-box" class="t-input border rounded p-2 flex flex-wrap gap-2.5 text-xs max-h-28 overflow-y-auto"></div>
+                </div>
+                <div>
+                  <label class="block text-[11px] font-bold mb-1">4. 中項目（複数選択可・未選択なら全中項目）</label>
+                  <div id="as-filter-minor-box" class="t-input border rounded p-2 flex flex-wrap gap-2.5 text-xs max-h-28 overflow-y-auto"></div>
+                </div>
+                <div>
+                  <input type="text" id="as-filter-keyword" oninput="renderAssignSearchList()" placeholder="キーワード / 問題コード検索（例: OT60A001、失語症）" class="t-input w-full border rounded p-2 text-xs">
+                </div>
+              </div>
+
+              <div id="assign-search-results" class="max-h-80 overflow-y-auto divide-y t-border t-card border rounded p-2 space-y-1 text-xs"></div>
+            </div>
+
+            <button onclick="saveNewAssignment()" class="w-full t-primary font-bold py-3.5 rounded-lg shadow transition">
+              この内容で課題を保存・配信予約する
+            </button>
+          </div>
+        </div>
+
+        <!-- 4-C. 配信済み課題と提出状況一覧 -->
+        <div id="t-view-manage-assign" class="hidden space-y-6">
+          <div class="t-card shadow-sm border p-6">
+            <div class="flex justify-between items-center mb-4">
+              <h2 class="text-lg font-bold">配信済み課題一覧</h2>
+              <button onclick="loadTeacherAssignments()" class="px-3 py-1.5 t-sub border rounded text-xs font-bold">🔄 更新</button>
+            </div>
+            <div id="teacher-assignments-list" class="space-y-3"></div>
+          </div>
+
+          <div id="teacher-submission-detail-box" class="hidden t-card shadow-sm border p-6">
+            <div class="flex flex-wrap justify-between items-center gap-2 mb-4">
+              <div>
+                <h3 id="sub-detail-title" class="text-base font-bold"></h3>
+                <p id="sub-detail-meta" class="text-xs t-muted"></p>
+              </div>
+              <button onclick="exportSubmissionCSV()" class="px-3 py-1.5 bg-emerald-600 text-white rounded text-xs font-bold">📥 この課題の成績をCSV出力</button>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse text-sm">
+                <thead>
+                  <tr class="t-sub border-b">
+                    <th class="p-3">学籍番号</th>
+                    <th class="p-3">氏名</th>
+                    <th class="p-3">提出状態</th>
+                    <th class="p-3 text-right">得点</th>
+                    <th class="p-3 text-right">正答率</th>
+                    <th class="p-3 text-right">提出日時</th>
+                  </tr>
+                </thead>
+                <tbody id="sub-detail-tbody" class="divide-y t-border"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ==================== テーマ着せ替えモーダル ==================== -->
+  <div id="theme-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+    <div class="t-card max-w-lg w-full border shadow-xl p-6 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-3">
+        <h2 class="text-lg font-bold">🎨 画面テーマの着せ替え</h2>
+        <button onclick="closeThemeModal()" class="text-xl font-bold t-muted hover:text-rose-500">×</button>
+      </div>
+      <p class="text-xs t-muted mb-4">累計解答数が増えると新しいテーマが解放されます！（現在の累計解答数: <strong id="modal-solved-count" class="text-base">0</strong> 問）</p>
+      <div id="theme-options-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4"></div>
+      <button onclick="closeThemeModal()" class="w-full t-sub border py-2.5 rounded-lg text-sm font-bold">閉じる</button>
+    </div>
+  </div>
+
+  <!-- Firebase SDK (v10 Modular CDN) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, addDoc, deleteDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    // =========================================================================
+    // ★ここにFirebaseコンソールからコピーした firebaseConfig を貼り付けてください★
+    // =========================================================================
+    const firebaseConfig = {
+  apiKey: "AIzaSyCQGe43aCWA9-k5wsH2gKqvPynNskw7JWY",
+  authDomain: "kokusi-2026.firebaseapp.com",
+  projectId: "kokusi-2026",
+  storageBucket: "kokusi-2026.firebasestorage.app",
+  messagingSenderId: "165368999605",
+  appId: "1:165368999605:web:40dd06d561e775fdafd8fc"
+};
+    // =========================================================================
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // テーマ定義（段階的アンロック条件付き）
+    const THEMES = [
+      { id: 'standard', name: 'スタンダード', desc: '初期テーマ（落ち着いたブルー）', minSolved: 0, color: '#4338ca' },
+      { id: 'sakura', name: 'さくらピンク', desc: '水玉背景＆やさしい丸文字ピンク', minSolved: 50, color: '#f43f5e' },
+      { id: 'mint', name: 'ミントカフェ', desc: '方眼ノート風ミントグリーン', minSolved: 100, color: '#14b8a6' },
+      { id: 'lavender', name: 'ラベンダー', desc: '斜めストライプ＆パステル紫', minSolved: 200, color: '#9333ea' },
+      { id: 'quest', name: 'RPGクエスト風', desc: 'ダンジョン赤レンガ＆冒険ドットUI', minSolved: 300, color: '#d97706' },
+      { id: 'dark', name: 'ダークモード', desc: '目に優しい夜学習向けモード', minSolved: 500, color: '#1e293b' }
+    ];
+
+    // グローバル状態
+    let authMode = 'login';
+    let currentUser = null;
+    let currentUserProfile = null;
+    let allQuestions = [];
+    let currentQuizList = [];
+    let currentIndex = 0;
+    let selectedOptions = new Set();
+    let userHistory = {};
+    let teacherCachedRows = [];
+
+    let activeAssignment = null;
+    let assignmentRecords = [];
+    let selectedAssignQIds = new Set();
+    let cachedAssignments = [];
+    let currentSubExportData = { title: '', rows: [] };
+
+    // 複数選択フィルター用Set（学生側）
+    let selectedFilterYears = new Set();
+    let selectedFilterSubjects = new Set();
+    let selectedFilterMajors = new Set();
+    let selectedFilterMinors = new Set();
+
+    // 複数選択フィルター用Set（教員側）
+    let asSelectedYears = new Set();
+    let asSelectedSubjects = new Set();
+    let asSelectedMajors = new Set();
+    let asSelectedMinors = new Set();
+
+    function applyTheme(themeId) {
+      document.documentElement.setAttribute('data-theme', themeId || 'standard');
+    }
+
+    async function loadQuestions() {
+      try {
+        const res = await fetch('questions.json');
+        if (!res.ok) throw new Error('questions.json が見つかりません');
+        allQuestions = await res.json();
+        const banner = document.getElementById('status-banner');
+        banner.innerHTML = `✅ 問題データ準備完了（収録問題数: <strong>${allQuestions.length}</strong> 問）`;
+        initFilters();
+        initAssignSearchFilters();
+        updateMatchedCount();
+      } catch (err) {
+        const banner = document.getElementById('status-banner');
+        banner.classList.add('text-rose-600');
+        banner.innerHTML = `⚠️ <strong>問題データ読み込みエラー:</strong> ${err.message}`;
+      }
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        currentUser = user;
+        await loadUserData(user.uid);
+        document.getElementById('auth-screen').classList.add('hidden');
+        document.getElementById('app-screen').classList.remove('hidden');
+        if (allQuestions.length === 0) await loadQuestions();
+        updateMatchedCount();
+        await window.loadAssignmentsForStudent();
+      } else {
+        currentUser = null;
+        currentUserProfile = null;
+        userHistory = {};
+        applyTheme('standard');
+        document.getElementById('auth-screen').classList.remove('hidden');
+        document.getElementById('app-screen').classList.add('hidden');
+      }
+    });
+
+    async function loadUserData(uid) {
+      const userSnap = await getDoc(doc(db, 'users', uid));
+      currentUserProfile = userSnap.exists() ? userSnap.data() : { studentId: '不明', name: 'ゲスト', role: 'student', theme: 'standard' };
+      applyTheme(currentUserProfile.theme || 'standard');
+
+      document.getElementById('header-user-badge').textContent = `${currentUserProfile.studentId} : ${currentUserProfile.name}`;
+      document.getElementById('nav-teacher').classList.toggle('hidden', currentUserProfile.role !== 'teacher');
+
+      const resSnap = await getDoc(doc(db, 'results', uid));
+      userHistory = resSnap.exists() ? (resSnap.data().history || {}) : {};
+    }
+
+    window.switchAuthMode = (mode) => {
+      authMode = mode;
+      document.getElementById('auth-error').classList.add('hidden');
+      const isLogin = mode === 'login';
+      document.getElementById('tab-login').className = isLogin ? 'flex-1 py-2 text-sm font-bold border-b-2 border-indigo-600 text-indigo-600' : 'flex-1 py-2 text-sm font-medium t-muted';
+      document.getElementById('tab-register').className = !isLogin ? 'flex-1 py-2 text-sm font-bold border-b-2 border-indigo-600 text-indigo-600' : 'flex-1 py-2 text-sm font-medium t-muted';
+      document.getElementById('register-name-box').classList.toggle('hidden', isLogin);
+      document.getElementById('auth-name').required = !isLogin;
+      document.getElementById('auth-submit-btn').textContent = isLogin ? 'ログインする' : '新規登録して始める';
+    };
+
+    window.handleAuthSubmit = async (e) => {
+      e.preventDefault();
+      const rawId = document.getElementById('auth-id').value.trim().toLowerCase();
+      const pass = document.getElementById('auth-pass').value;
+      const name = document.getElementById('auth-name').value.trim();
+      const email = `${rawId}@kokushi.local`;
+      const errBox = document.getElementById('auth-error');
+      errBox.classList.add('hidden');
+
+      try {
+        if (authMode === 'register') {
+          const cred = await createUserWithEmailAndPassword(auth, email, pass);
+          await setDoc(doc(db, 'users', cred.user.uid), {
+            studentId: rawId, name: name, role: 'student', theme: 'standard', createdAt: Date.now()
+          });
+          await setDoc(doc(db, 'results', cred.user.uid), {
+            studentId: rawId, name: name, totalAnswered: 0, totalCorrect: 0, history: {}, updatedAt: Date.now()
+          });
+        } else {
+          await signInWithEmailAndPassword(auth, email, pass);
+        }
+      } catch (err) {
+        errBox.classList.remove('hidden');
+        errBox.textContent = err.code === 'auth/email-already-in-use'
+          ? 'この学籍番号は既に登録されています。'
+          : '学籍番号またはパスワードが正しくありません。';
+      }
+    };
+
+    window.handleLogout = async () => { await signOut(auth); };
+
+    // ==================== テーマ着せ替えモーダル ====================
+    window.openThemeModal = () => {
+      const solvedCount = Object.keys(userHistory).length;
+      document.getElementById('modal-solved-count').textContent = solvedCount;
+      const currentTheme = currentUserProfile?.theme || 'standard';
+      const grid = document.getElementById('theme-options-grid');
+
+      grid.innerHTML = THEMES.map(t => {
+        const isUnlocked = solvedCount >= t.minSolved || currentUserProfile?.role === 'teacher';
+        const isSelected = currentTheme === t.id;
+        return `
+          <button onclick="${isUnlocked ? `selectUserTheme('${t.id}')` : ''}" 
+            class="p-3.5 rounded-xl border-2 text-left transition flex items-center justify-between ${isSelected ? 'border-indigo-600 ring-2 ring-indigo-300' : 't-border'} ${isUnlocked ? 'hover:opacity-90 cursor-pointer' : 'opacity-55 cursor-not-allowed'}">
+            <div>
+              <div class="font-bold text-sm flex items-center gap-2">
+                <span class="w-4 h-4 rounded-full inline-block border border-black/10" style="background:${t.color}"></span>
+                ${t.name}
+              </div>
+              <div class="text-xs t-muted mt-1">
+                ${isUnlocked ? t.desc : `🔒 累計 ${t.minSolved} 問達成で解放（あと ${t.minSolved - solvedCount} 問）`}
+              </div>
+            </div>
+            ${isSelected ? '<span class="text-xs font-bold text-indigo-500 ml-2">適用中</span>' : ''}
+          </button>
+        `;
+      }).join('');
+      document.getElementById('theme-modal').classList.remove('hidden');
+    };
+
+    window.closeThemeModal = () => {
+      document.getElementById('theme-modal').classList.add('hidden');
+    };
+
+    window.selectUserTheme = async (themeId) => {
+      applyTheme(themeId);
+      if (currentUser && currentUserProfile) {
+        currentUserProfile.theme = themeId;
+        await setDoc(doc(db, 'users', currentUser.uid), { theme: themeId }, { merge: true });
+      }
+      window.openThemeModal();
+    };
+
+    // ==================== 自主学習フィルター（全項目チェックボックス対応） ====================
+    function initFilters() {
+      const years = [...new Set(allQuestions.map(q => String(q.year)))].filter(Boolean).sort((a, b) => Number(b) - Number(a));
+      const yearBox = document.getElementById('filter-year-box');
+      if (yearBox) {
+        yearBox.innerHTML = years.map(y => `
+          <label class="inline-flex items-center cursor-pointer">
+            <input type="checkbox" value="${y}" onchange="toggleFilterYear('${y}')" class="mr-1.5 rounded">
+            <span>第${y}回</span>
+          </label>
+        `).join('');
+      }
+
+      const subjects = [...new Set(allQuestions.map(q => q.subject))].filter(Boolean);
+      const subBox = document.getElementById('filter-subject-box');
+      if (subBox) {
+        subBox.innerHTML = subjects.map(s => `
+          <label class="inline-flex items-center cursor-pointer">
+            <input type="checkbox" value="${s}" onchange="toggleFilterSubject('${s}')" class="mr-1.5 rounded">
+            <span>${s}</span>
+          </label>
+        `).join('');
+      }
+
+      window.updateMajorOptions();
+      ['opt-wrong-only', 'opt-unsolved-only'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('change', updateMatchedCount);
+      });
+    }
+
+    window.toggleFilterYear = (yr) => {
+      if (selectedFilterYears.has(yr)) selectedFilterYears.delete(yr);
+      else selectedFilterYears.add(yr);
+      updateMatchedCount();
+    };
+
+    window.toggleFilterSubject = (sub) => {
+      if (selectedFilterSubjects.has(sub)) selectedFilterSubjects.delete(sub);
+      else selectedFilterSubjects.add(sub);
+      window.updateMajorOptions();
+    };
+
+    window.toggleFilterMajor = (maj) => {
+      if (selectedFilterMajors.has(maj)) selectedFilterMajors.delete(maj);
+      else selectedFilterMajors.add(maj);
+      window.updateMinorOptions();
+    };
+
+    window.toggleFilterMinor = (min) => {
+      if (selectedFilterMinors.has(min)) selectedFilterMinors.delete(min);
+      else selectedFilterMinors.add(min);
+      updateMatchedCount();
+    };
+
+    window.updateMajorOptions = () => {
+      const filtered = selectedFilterSubjects.size === 0
+        ? allQuestions
+        : allQuestions.filter(q => selectedFilterSubjects.has(q.subject));
+      const majors = [...new Set(filtered.map(q => q.majorCategory))].filter(Boolean);
+      
+      [...selectedFilterMajors].forEach(m => { if (!majors.includes(m)) selectedFilterMajors.delete(m); });
+
+      const majBox = document.getElementById('filter-major-box');
+      if (majBox) {
+        majBox.innerHTML = majors.length ? majors.map(m => `
+          <label class="inline-flex items-center cursor-pointer">
+            <input type="checkbox" ${selectedFilterMajors.has(m) ? 'checked' : ''} onchange="toggleFilterMajor('${m}')" class="mr-1.5 rounded">
+            <span>${m}</span>
+          </label>
+        `).join('') : '<span class="t-muted text-xs">該当する大項目がありません</span>';
+      }
+      window.updateMinorOptions();
+    };
+
+    window.updateMinorOptions = () => {
+      let filtered = allQuestions;
+      if (selectedFilterSubjects.size > 0) filtered = filtered.filter(q => selectedFilterSubjects.has(q.subject));
+      if (selectedFilterMajors.size > 0) filtered = filtered.filter(q => selectedFilterMajors.has(q.majorCategory));
+      const minors = [...new Set(filtered.map(q => q.minorCategory))].filter(Boolean);
+
+      [...selectedFilterMinors].forEach(m => { if (!minors.includes(m)) selectedFilterMinors.delete(m); });
+
+      const minBox = document.getElementById('filter-minor-box');
+      if (minBox) {
+        minBox.innerHTML = minors.length ? minors.map(m => `
+          <label class="inline-flex items-center cursor-pointer">
+            <input type="checkbox" ${selectedFilterMinors.has(m) ? 'checked' : ''} onchange="toggleFilterMinor('${m}')" class="mr-1.5 rounded">
+            <span>${m}</span>
+          </label>
+        `).join('') : '<span class="t-muted text-xs">該当する中項目がありません</span>';
+      }
+      updateMatchedCount();
+    };
+
+    function getFilteredQuestions() {
+      const wrongOnly = document.getElementById('opt-wrong-only').checked;
+      const unsolvedOnly = document.getElementById('opt-unsolved-only').checked;
+
+      return allQuestions.filter(q => {
+        if (selectedFilterYears.size > 0 && !selectedFilterYears.has(String(q.year))) return false;
+        if (selectedFilterSubjects.size > 0 && !selectedFilterSubjects.has(q.subject)) return false;
+        if (selectedFilterMajors.size > 0 && !selectedFilterMajors.has(q.majorCategory)) return false;
+        if (selectedFilterMinors.size > 0 && !selectedFilterMinors.has(q.minorCategory)) return false;
+        const hist = userHistory[q.id];
+        if (wrongOnly && (!hist || hist.isCorrect)) return false;
+        if (unsolvedOnly && hist) return false;
+        return true;
+      });
+    }
+
+    function updateMatchedCount() {
+      const list = getFilteredQuestions();
+      document.getElementById('matched-count').textContent = list.length;
+      const btn = document.getElementById('btn-start');
+      btn.disabled = list.length === 0;
+      btn.classList.toggle('opacity-50', list.length === 0);
+    }
+
+    // ==================== 学生側：配信課題の取得＆受験開始 ====================
+    window.loadAssignmentsForStudent = async () => {
+      const container = document.getElementById('student-assignments-list');
+      try {
+        const snap = await getDocs(collection(db, 'assignments'));
+        const list = [];
+        snap.forEach(d => list.push({ id: d.id, ...d.data() }));
+        list.sort((a, b) => b.publishAt - a.publishAt);
+
+        if (list.length === 0) {
+          container.innerHTML = '<p class="text-xs t-muted">現在配信されている課題はありません。</p>';
+          return;
+        }
+
+        const mySubs = {};
+        const subSnap = await getDocs(collection(db, 'submissions'));
+        subSnap.forEach(d => {
+          const data = d.data();
+          if (data.uid === currentUser.uid) mySubs[data.assignmentId] = data;
+        });
+
+        const now = Date.now();
+        container.innerHTML = list.map(a => {
+          const sub = mySubs[a.id];
+          const isExpired = a.deadlineAt && now > a.deadlineAt;
+          const deadlineText = a.deadlineAt
+            ? `締切: ${new Date(a.deadlineAt).toLocaleString('ja-JP', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })}`
+            : '締切なし';
+          const modeLabel = a.mode === 'test' ? '小テスト形式' : '演習形式';
+
+          let statusBadge = '<span class="px-2 py-0.5 rounded text-xs font-bold bg-amber-100 text-amber-800">未提出</span>';
+          if (sub) {
+            statusBadge = `<span class="px-2 py-0.5 rounded text-xs font-bold bg-emerald-100 text-emerald-800">提出済 (${sub.score}/${sub.total}問正解)</span>`;
+          } else if (isExpired) {
+            statusBadge = '<span class="px-2 py-0.5 rounded text-xs font-bold bg-rose-100 text-rose-800">期限切れ</span>';
+          }
+
+          return `
+            <div class="t-sub border rounded-lg p-3.5 flex flex-wrap justify-between items-center gap-3">
+              <div>
+                <div class="flex flex-wrap items-center gap-2 mb-1">
+                  ${statusBadge}
+                  <span class="text-xs px-2 py-0.5 rounded t-primary-badge font-bold">${modeLabel}</span>
+                  <span class="font-bold text-sm">${a.title}</span>
+                </div>
+                <div class="text-xs t-muted">問題数: ${a.questionIds.length}問 ／ ${deadlineText}</div>
+              </div>
+              <button onclick="startAssignmentQuiz('${a.id}')" class="t-primary px-4 py-2 rounded-lg text-xs font-bold shadow">
+                ${sub ? 'もう一度解く' : '課題を開始する'}
+              </button>
+            </div>
+          `;
+        }).join('');
+      } catch (err) {
+        container.innerHTML = `<p class="text-xs text-rose-500">課題読み込みエラー: ${err.message}</p>`;
+      }
+    };
+
+    window.startAssignmentQuiz = async (assignmentId) => {
+      const snap = await getDoc(doc(db, 'assignments', assignmentId));
+      if (!snap.exists()) return;
+      const assign = { id: snap.id, ...snap.data() };
+      const qMap = new Map(allQuestions.map(q => [q.id, q]));
+      const questions = assign.questionIds.map(id => qMap.get(id)).filter(Boolean);
+
+      if (questions.length === 0) {
+        alert('問題データが見つかりません。');
+        return;
+      }
+
+      activeAssignment = assign;
+      assignmentRecords = [];
+      currentQuizList = questions;
+      currentIndex = 0;
+
+      const banner = document.getElementById('quiz-mode-banner');
+      banner.classList.remove('hidden');
+      document.getElementById('quiz-mode-title').textContent = `📌 課題: ${assign.title}`;
+      document.getElementById('quiz-mode-type-badge').textContent = assign.mode === 'test' ? '小テストモード（終了後に一括採点）' : '演習モード';
+
+      document.getElementById('nav-quiz').classList.remove('hidden');
+      window.switchTab('quiz');
+      renderQuestion();
+    };
+
+    window.startFreeQuiz = () => {
+      let list = getFilteredQuestions();
+      if (list.length === 0) return;
+      if (document.getElementById('opt-random').checked) {
+        list = [...list].sort(() => Math.random() - 0.5);
+      }
+      activeAssignment = null;
+      assignmentRecords = [];
+      document.getElementById('quiz-mode-banner').classList.add('hidden');
+
+      currentQuizList = list;
+      currentIndex = 0;
+      document.getElementById('nav-quiz').classList.remove('hidden');
+      window.switchTab('quiz');
+      renderQuestion();
+    };
+
+    // ==================== 問題描画＆解答処理 ====================
+    function renderQuestion() {
+      const q = currentQuizList[currentIndex];
+      selectedOptions.clear();
+
+      document.getElementById('q-badge-year').textContent = `第${q.year}回 ${q.session}${q.number}`;
+      const cats = [q.subject, q.majorCategory, q.minorCategory, q.subMinorCategory].filter(Boolean).join(' > ');
+      document.getElementById('q-badge-cat').textContent = cats;
+      document.getElementById('q-progress').textContent = `${currentIndex + 1} / ${currentQuizList.length}`;
+      document.getElementById('q-text').textContent = q.question;
+
+      const imgEl = document.getElementById('q-image');
+      if (q.image) {
+        imgEl.style.display = 'block';
+        imgEl.src = q.image;
+      } else {
+        imgEl.style.display = 'none';
+      }
+
+      document.getElementById('q-multi-notice').classList.toggle('hidden', !q.isMultiple);
+
+      const optsContainer = document.getElementById('q-options');
+      optsContainer.innerHTML = '';
+      q.options.forEach((optText, i) => {
+        const optNum = i + 1;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.id = `opt-btn-${optNum}`;
+        btn.onclick = () => toggleOption(optNum, q.isMultiple);
+        btn.className = 't-card w-full text-left p-3.5 rounded-lg border-2 t-border hover:border-indigo-400 transition flex items-start space-x-3';
+        btn.innerHTML = `
+          <span class="flex-shrink-0 w-7 h-7 rounded-full t-sub font-bold flex items-center justify-center text-sm" id="opt-circle-${optNum}">${optNum}</span>
+          <div class="flex-1">
+            <div class="text-sm md:text-base font-medium">${optText}</div>
+            <div id="opt-exp-${optNum}" class="hidden mt-2 text-xs p-2 rounded t-sub leading-relaxed"></div>
+          </div>
+        `;
+        optsContainer.appendChild(btn);
+      });
+
+      const isTestMode = activeAssignment && activeAssignment.mode === 'test';
+      const submitBtn = document.getElementById('btn-submit-answer');
+      submitBtn.classList.remove('hidden');
+      submitBtn.textContent = isTestMode
+        ? (currentIndex + 1 < currentQuizList.length ? '解答を記録して次の問題へ →' : '解答を完了して提出する')
+        : '解答を確定する';
+      document.getElementById('q-result-box').classList.add('hidden');
+    }
+
+    function toggleOption(num, isMultiple) {
+      if (!document.getElementById('q-result-box').classList.contains('hidden')) return;
+      if (!isMultiple) {
+        selectedOptions.clear();
+        for (let i = 1; i <= 5; i++) {
+          const b = document.getElementById(`opt-btn-${i}`);
+          const c = document.getElementById(`opt-circle-${i}`);
+          if (b) {
+            b.classList.remove('border-indigo-600', 'ring-2', 'ring-indigo-300');
+            c.classList.remove('bg-indigo-600', 'text-white');
+          }
+        }
+      }
+      if (selectedOptions.has(num)) {
+        selectedOptions.delete(num);
+        document.getElementById(`opt-btn-${num}`).classList.remove('border-indigo-600', 'ring-2', 'ring-indigo-300');
+        document.getElementById(`opt-circle-${num}`).classList.remove('bg-indigo-600', 'text-white');
+      } else {
+        selectedOptions.add(num);
+        document.getElementById(`opt-btn-${num}`).classList.add('border-indigo-600', 'ring-2', 'ring-indigo-300');
+        document.getElementById(`opt-circle-${num}`).classList.add('bg-indigo-600', 'text-white');
+      }
+    }
+
+    window.submitAnswer = async () => {
+      if (selectedOptions.size === 0) {
+        alert('選択肢を1つ以上選んでください。');
+        return;
+      }
+
+      const prevSolvedCount = Object.keys(userHistory).length;
+      const q = currentQuizList[currentIndex];
+      const userAns = [...selectedOptions].sort((a, b) => a - b);
+      const correctAns = [...q.correctAnswers].sort((a, b) => a - b);
+      const isCorrect = JSON.stringify(userAns) === JSON.stringify(correctAns);
+
+      userHistory[q.id] = {
+        major: q.majorCategory || '未分類',
+        minor: q.minorCategory || '未分類',
+        isCorrect: isCorrect,
+        updatedAt: Date.now()
+      };
+
+      const newSolvedCount = Object.keys(userHistory).length;
+      const newlyUnlocked = THEMES.find(t => t.minSolved > prevSolvedCount && t.minSolved <= newSolvedCount);
+      if (newlyUnlocked) {
+        document.getElementById('theme-unlock-msg').textContent = `🎉 累計 ${newSolvedCount} 問達成！新テーマ「${newlyUnlocked.name}」が解放されました！`;
+        document.getElementById('theme-unlock-toast').classList.remove('hidden');
+      }
+
+      if (activeAssignment) {
+        assignmentRecords.push({ question: q, userAns, correctAns, isCorrect });
+      }
+
+      if (currentUser && currentUserProfile) {
+        const records = Object.values(userHistory);
+        await setDoc(doc(db, 'results', currentUser.uid), {
+          studentId: currentUserProfile.studentId,
+          name: currentUserProfile.name,
+          totalAnswered: records.length,
+          totalCorrect: records.filter(r => r.isCorrect).length,
+          history: userHistory,
+          updatedAt: Date.now()
+        }, { merge: true });
+      }
+
+      if (activeAssignment && activeAssignment.mode === 'test') {
+        await window.nextQuestion();
+        return;
+      }
+
+      q.options.forEach((_, i) => {
+        const num = i + 1;
+        const btn = document.getElementById(`opt-btn-${num}`);
+        const expEl = document.getElementById(`opt-exp-${num}`);
+        const isAns = correctAns.includes(num);
+        const isPicked = selectedOptions.has(num);
+
+        btn.classList.remove('border-indigo-600', 'ring-2', 'ring-indigo-300');
+        if (isAns) btn.classList.add('border-emerald-500', 'bg-emerald-500/10');
+        else if (isPicked && !isAns) btn.classList.add('border-rose-500', 'bg-rose-500/10');
+
+        if (q.optionExplanations && q.optionExplanations[i]) {
+          expEl.textContent = q.optionExplanations[i];
+          expEl.classList.remove('hidden');
+        }
+      });
+
+      const banner = document.getElementById('q-judge-banner');
+      if (isCorrect) {
+        banner.className = 'p-4 rounded-lg font-bold text-base md:text-lg mb-4 bg-emerald-100 text-emerald-800 border border-emerald-300';
+        banner.textContent = `🎉 正解！ （正答: ${correctAns.join('・')}）`;
+      } else {
+        banner.className = 'p-4 rounded-lg font-bold text-base md:text-lg mb-4 bg-rose-100 text-rose-800 border border-rose-300';
+        banner.textContent = `❌ 不正解... （あなたの解答: ${userAns.join('・')} ／ 正答: ${correctAns.join('・')}）`;
+      }
+
+      document.getElementById('q-overall-exp').textContent = q.overallExplanation || '（全体解説なし）';
+      document.getElementById('btn-submit-answer').classList.add('hidden');
+      document.getElementById('q-result-box').classList.remove('hidden');
+      document.getElementById('btn-next-q').textContent = (currentIndex + 1 < currentQuizList.length)
+        ? '次の問題へ進む →'
+        : (activeAssignment ? '課題を提出して完了する' : '演習を終了して成績を見る');
+    };
+
+    window.nextQuestion = async () => {
+      if (currentIndex + 1 < currentQuizList.length) {
+        currentIndex++;
+        renderQuestion();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+
+      if (activeAssignment && currentUser && currentUserProfile) {
+        const score = assignmentRecords.filter(r => r.isCorrect).length;
+        const total = assignmentRecords.length;
+        const subDocId = `${activeAssignment.id}_${currentUser.uid}`;
+
+        await setDoc(doc(db, 'submissions', subDocId), {
+          assignmentId: activeAssignment.id,
+          assignmentTitle: activeAssignment.title,
+          uid: currentUser.uid,
+          studentId: currentUserProfile.studentId,
+          name: currentUserProfile.name,
+          score: score,
+          total: total,
+          submittedAt: Date.now()
+        });
+
+        await window.loadAssignmentsForStudent();
+
+        if (activeAssignment.mode === 'test') {
+          renderTestSummary(activeAssignment.title, score, total, assignmentRecords);
+          return;
+        } else {
+          alert(`課題「${activeAssignment.title}」を提出しました！（得点: ${score} / ${total}問正解）`);
+          window.switchTab('setup');
+          return;
+        }
+      }
+
+      window.switchTab('analytics');
+    };
+
+    function renderTestSummary(title, score, total, records) {
+      ['setup', 'quiz', 'analytics', 'teacher'].forEach(t => document.getElementById(`view-${t}`).classList.add('hidden'));
+      document.getElementById('view-test-summary').classList.remove('hidden');
+      document.getElementById('test-summary-title').textContent = title;
+      document.getElementById('test-summary-score').textContent = `${score} / ${total} 問正解（${Math.round((score / total) * 100)}%）`;
+
+      document.getElementById('test-summary-details').innerHTML = records.map((r, idx) => `
+        <div class="t-card border p-4 rounded-lg">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-xs font-bold t-primary-badge px-2 py-0.5 rounded">第${idx + 1}問（第${r.question.year}回 ${r.question.session}${r.question.number}）</span>
+            <span class="text-xs font-bold ${r.isCorrect ? 'text-emerald-600' : 'text-rose-600'}">
+              ${r.isCorrect ? '🎉 正解' : `❌ 不正解（解答: ${r.userAns.join('・')} / 正答: ${r.correctAns.join('・')}）`}
+            </span>
+          </div>
+          <p class="text-sm font-medium mb-2">${r.question.question}</p>
+          <p class="text-xs t-sub p-2.5 rounded border">${r.question.overallExplanation || '解説なし'}</p>
+        </div>
+      `).join('');
+    }
+
+    // ==================== タブ切り替え ====================
+    window.switchTab = (tab) => {
+      document.getElementById('view-test-summary').classList.add('hidden');
+      ['setup', 'quiz', 'analytics', 'teacher'].forEach(t => {
+        document.getElementById(`view-${t}`).classList.toggle('hidden', t !== tab);
+        const nav = document.getElementById(`nav-${t}`);
+        if (nav && t !== 'teacher') {
+          nav.classList.toggle('t-header-active', t === tab);
+        }
+      });
+      if (tab === 'analytics') renderPersonalAnalytics();
+      if (tab === 'teacher') window.loadTeacherDashboard();
+      if (tab === 'setup') {
+        updateMatchedCount();
+        window.loadAssignmentsForStudent();
+      }
+    };
+
+    // ==================== 個人成績分析 ====================
+    function renderPersonalAnalytics() {
+      const records = Object.values(userHistory);
+      const total = records.length;
+      const correct = records.filter(r => r.isCorrect).length;
+      const rate = total > 0 ? Math.round((correct / total) * 100) : 0;
+
+      document.getElementById('stat-total').textContent = `${total}問`;
+      document.getElementById('stat-correct').textContent = `${correct}問`;
+      document.getElementById('stat-rate').textContent = `${rate}%`;
+
+      const tbody = document.getElementById('analytics-table-body');
+      if (total === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="p-4 text-center t-muted">まだ解答履歴がありません</td></tr>';
+        return;
+      }
+
+      const groups = {};
+      records.forEach(r => {
+        const key = `${r.major}|||${r.minor}`;
+        if (!groups[key]) groups[key] = { major: r.major, minor: r.minor, count: 0, correct: 0 };
+        groups[key].count++;
+        if (r.isCorrect) groups[key].correct++;
+      });
+
+      const sorted = Object.values(groups)
+        .map(g => ({ ...g, rate: Math.round((g.correct / g.count) * 100) }))
+        .sort((a, b) => a.rate - b.rate);
+
+      tbody.innerHTML = sorted.map(g => {
+        let badge = '<span class="px-2 py-0.5 rounded text-xs font-bold bg-emerald-100 text-emerald-800">◎ 順調</span>';
+        if (g.rate < 60) badge = '<span class="px-2 py-0.5 rounded text-xs font-bold bg-rose-100 text-rose-800">⚠️ 要復習</span>';
+        else if (g.rate < 80) badge = '<span class="px-2 py-0.5 rounded text-xs font-bold bg-amber-100 text-amber-800">△ もう一息</span>';
+
+        return `
+          <tr>
+            <td class="p-3 font-medium">${g.major}</td>
+            <td class="p-3">${g.minor}</td>
+            <td class="p-3 text-right">${g.correct} / ${g.count}</td>
+            <td class="p-3 text-right font-bold ${g.rate < 60 ? 'text-rose-500' : ''}">${g.rate}%</td>
+            <td class="p-3 text-center">${badge}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // ==================== 教員管理画面 ====================
+    window.switchTeacherSubTab = (sub) => {
+      ['grades', 'create-assign', 'manage-assign'].forEach(s => {
+        document.getElementById(`t-view-${s}`).classList.toggle('hidden', s !== sub);
+        const btn = document.getElementById(`t-tab-${s}`);
+        if (s === sub) {
+          btn.className = 'px-4 py-2 rounded-lg text-xs md:text-sm font-bold t-primary';
+        } else {
+          btn.className = 'px-4 py-2 rounded-lg text-xs md:text-sm font-bold t-card border';
+        }
+      });
+      if (sub === 'grades') window.loadTeacherDashboard();
+      if (sub === 'create-assign') {
+        initAssignSearchFilters();
+        renderAssignSearchList();
+      }
+      if (sub === 'manage-assign') window.loadTeacherAssignments();
+    };
+
+    window.loadTeacherDashboard = async () => {
+      if (currentUserProfile?.role !== 'teacher') return;
+      const tbody = document.getElementById('teacher-students-body');
+      const catBody = document.getElementById('teacher-category-body');
+      tbody.innerHTML = '<tr><td colspan="7" class="p-4 text-center t-muted">集計中...</td></tr>';
+
+      const snap = await getDocs(collection(db, 'results'));
+      const rows = [];
+      const globalCats = {};
+
+      snap.forEach(docSnap => {
+        const d = docSnap.data();
+        const total = d.totalAnswered || 0;
+        const correct = d.totalCorrect || 0;
+        const rate = total > 0 ? Math.round((correct / total) * 100) : 0;
+
+        const studentCats = {};
+        Object.values(d.history || {}).forEach(item => {
+          const cKey = `${item.major}|||${item.minor}`;
+          if (!studentCats[cKey]) studentCats[cKey] = { minor: item.minor, count: 0, correct: 0 };
+          studentCats[cKey].count++;
+          if (item.isCorrect) studentCats[cKey].correct++;
+
+          if (!globalCats[cKey]) globalCats[cKey] = { major: item.major, minor: item.minor, count: 0, correct: 0 };
+          globalCats[cKey].count++;
+          if (item.isCorrect) globalCats[cKey].correct++;
+        });
+
+        let weakestMinor = '-';
+        const catList = Object.values(studentCats).filter(c => c.count >= 2);
+        if (catList.length > 0) {
+          catList.sort((a, b) => (a.correct / a.count) - (b.correct / b.count));
+          const w = catList[0];
+          weakestMinor = `${w.minor} (${Math.round((w.correct / w.count) * 100)}%)`;
+        }
+
+        const lastDate = d.updatedAt ? new Date(d.updatedAt).toLocaleString('ja-JP', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-';
+        rows.push({ studentId: d.studentId || '', name: d.name || '', total, correct, rate, weakestMinor, lastDate });
+      });
+
+      rows.sort((a, b) => a.studentId.localeCompare(b.studentId));
+      teacherCachedRows = rows;
+
+      tbody.innerHTML = rows.length ? rows.map(r => `
+        <tr>
+          <td class="p-3 font-mono font-bold">${r.studentId}</td>
+          <td class="p-3">${r.name}</td>
+          <td class="p-3 text-right">${r.total} 問</td>
+          <td class="p-3 text-right">${r.correct} 問</td>
+          <td class="p-3 text-right font-bold ${r.rate < 60 && r.total > 0 ? 'text-rose-500' : ''}">${r.rate}%</td>
+          <td class="p-3 text-xs t-muted">${r.weakestMinor}</td>
+          <td class="p-3 text-right text-xs t-muted">${r.lastDate}</td>
+        </tr>
+      `).join('') : '<tr><td colspan="7" class="p-4 text-center t-muted">データがありません</td></tr>';
+
+      const sortedGlobal = Object.values(globalCats)
+        .map(g => ({ ...g, rate: Math.round((g.correct / g.count) * 100) }))
+        .sort((a, b) => a.rate - b.rate);
+
+      catBody.innerHTML = sortedGlobal.length ? sortedGlobal.map(g => `
+        <tr>
+          <td class="p-3 font-medium">${g.major}</td>
+          <td class="p-3">${g.minor}</td>
+          <td class="p-3 text-right">${g.count} 問</td>
+          <td class="p-3 text-right font-bold ${g.rate < 60 ? 'text-rose-500' : ''}">${g.rate}%</td>
+        </tr>
+      `).join('') : '<tr><td colspan="4" class="p-4 text-center t-muted">データがありません</td></tr>';
+    };
+
+    // ==================== 教員側：課題問題検索（全項目チェックボックス対応） ====================
+    function initAssignSearchFilters() {
+      const years = [...new Set(allQuestions.map(q => String(q.year)))].filter(Boolean).sort((a, b) => Number(b) - Number(a));
+      const yBox = document.getElementById('as-filter-year-box');
+      if (yBox) {
+        yBox.innerHTML = years.map(y => `
+          <label class="inline-flex items-center cursor-pointer">
+            <input type="checkbox" ${asSelectedYears.has(y) ? 'checked' : ''} onchange="toggleAsYear('${y}')" class="mr-1 rounded">
+            <span>第${y}回</span>
+          </label>
+        `).join('');
+      }
+
+      const subjects = [...new Set(allQuestions.map(q => q.subject))].filter(Boolean);
+      const sBox = document.getElementById('as-filter-subject-box');
+      if (sBox) {
+        sBox.innerHTML = subjects.map(s => `
+          <label class="inline-flex items-center cursor-pointer">
+            <input type="checkbox" ${asSelectedSubjects.has(s) ? 'checked' : ''} onchange="toggleAsSubject('${s}')" class="mr-1 rounded">
+            <span>${s}</span>
+          </label>
+        `).join('');
+      }
+
+      window.updateAsMajorOptions();
+
+      const pubInput = document.getElementById('assign-publish-at');
+      if (pubInput && !pubInput.value) {
+        const now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        pubInput.value = now.toISOString().slice(0, 16);
+      }
+    }
+
+    window.toggleAsYear = (yr) => {
+      if (asSelectedYears.has(yr)) asSelectedYears.delete(yr);
+      else asSelectedYears.add(yr);
+      window.renderAssignSearchList();
+    };
+
+    window.toggleAsSubject = (sub) => {
+      if (asSelectedSubjects.has(sub)) asSelectedSubjects.delete(sub);
+      else asSelectedSubjects.add(sub);
+      window.updateAsMajorOptions();
+    };
+
+    window.toggleAsMajor = (maj) => {
+      if (asSelectedMajors.has(maj)) asSelectedMajors.delete(maj);
+      else asSelectedMajors.add(maj);
+      window.updateAsMinorOptions();
+    };
+
+    window.toggleAsMinor = (min) => {
+      if (asSelectedMinors.has(min)) asSelectedMinors.delete(min);
+      else asSelectedMinors.add(min);
+      window.renderAssignSearchList();
+    };
+
+    window.updateAsMajorOptions = () => {
+      const filtered = asSelectedSubjects.size === 0
+        ? allQuestions
+        : allQuestions.filter(q => asSelectedSubjects.has(q.subject));
+      const majors = [...new Set(filtered.map(q => q.majorCategory))].filter(Boolean);
+      [...asSelectedMajors].forEach(m => { if (!majors.includes(m)) asSelectedMajors.delete(m); });
+
+      const mBox = document.getElementById('as-filter-major-box');
+      if (mBox) {
+        mBox.innerHTML = majors.length ? majors.map(m => `
+          <label class="inline-flex items-center cursor-pointer">
+            <input type="checkbox" ${asSelectedMajors.has(m) ? 'checked' : ''} onchange="toggleAsMajor('${m}')" class="mr-1 rounded">
+            <span>${m}</span>
+          </label>
+        `).join('') : '<span class="t-muted">該当なし</span>';
+      }
+      window.updateAsMinorOptions();
+    };
+
+    window.updateAsMinorOptions = () => {
+      let filtered = allQuestions;
+      if (asSelectedSubjects.size > 0) filtered = filtered.filter(q => asSelectedSubjects.has(q.subject));
+      if (asSelectedMajors.size > 0) filtered = filtered.filter(q => asSelectedMajors.has(q.majorCategory));
+      const minors = [...new Set(filtered.map(q => q.minorCategory))].filter(Boolean);
+      [...asSelectedMinors].forEach(m => { if (!minors.includes(m)) asSelectedMinors.delete(m); });
+
+      const minBox = document.getElementById('as-filter-minor-box');
+      if (minBox) {
+        minBox.innerHTML = minors.length ? minors.map(m => `
+          <label class="inline-flex items-center cursor-pointer">
+            <input type="checkbox" ${asSelectedMinors.has(m) ? 'checked' : ''} onchange="toggleAsMinor('${m}')" class="mr-1 rounded">
+            <span>${m}</span>
+          </label>
+        `).join('') : '<span class="t-muted">該当なし</span>';
+      }
+      window.renderAssignSearchList();
+    };
+
+    function getFilteredAssignCandidates() {
+      const kwEl = document.getElementById('as-filter-keyword');
+      const kw = kwEl ? kwEl.value.trim().toLowerCase() : '';
+
+      return allQuestions.filter(q => {
+        if (asSelectedYears.size > 0 && !asSelectedYears.has(String(q.year))) return false;
+        if (asSelectedSubjects.size > 0 && !asSelectedSubjects.has(q.subject)) return false;
+        if (asSelectedMajors.size > 0 && !asSelectedMajors.has(q.majorCategory)) return false;
+        if (asSelectedMinors.size > 0 && !asSelectedMinors.has(q.minorCategory)) return false;
+        if (kw && !q.question.toLowerCase().includes(kw) && !q.id.toLowerCase().includes(kw)) return false;
+        return true;
+      });
+    }
+
+    window.renderAssignSearchList = () => {
+      const countEl = document.getElementById('selected-q-count');
+      if (countEl) countEl.textContent = selectedAssignQIds.size;
+      const list = getFilteredAssignCandidates().slice(0, 150);
+      const container = document.getElementById('assign-search-results');
+      if (!container) return;
+
+      if (list.length === 0) {
+        container.innerHTML = '<p class="p-3 t-muted text-center">条件に一致する問題がありません</p>';
+        return;
+      }
+
+      container.innerHTML = list.map(q => {
+        const checked = selectedAssignQIds.has(q.id) ? 'checked' : '';
+        return `
+          <label class="flex items-start gap-2 p-2 hover:bg-indigo-500/10 cursor-pointer rounded">
+            <input type="checkbox" ${checked} onchange="toggleAssignQuestion('${q.id}')" class="mt-0.5">
+            <div class="flex-1">
+              <span class="font-bold text-indigo-500">[${q.id}]</span>
+              <span class="t-muted">(第${q.year}回 / ${q.subject} > ${q.majorCategory} > ${q.minorCategory})</span>
+              <div class="line-clamp-2 mt-0.5">${q.question}</div>
+            </div>
+          </label>
+        `;
+      }).join('');
+    };
+
+    window.toggleAssignQuestion = (qId) => {
+      if (selectedAssignQIds.has(qId)) selectedAssignQIds.delete(qId);
+      else selectedAssignQIds.add(qId);
+      document.getElementById('selected-q-count').textContent = selectedAssignQIds.size;
+    };
+
+    window.selectAllSearchedQuestions = () => {
+      getFilteredAssignCandidates().slice(0, 150).forEach(q => selectedAssignQIds.add(q.id));
+      window.renderAssignSearchList();
+    };
+// 学生画面：自主学習の選択条件をすべてクリア
+    window.clearStudentFilters = () => {
+      selectedFilterYears.clear();
+      selectedFilterSubjects.clear();
+      selectedFilterMajors.clear();
+      selectedFilterMinors.clear();
+
+      document.querySelectorAll('#filter-year-box input[type="checkbox"], #filter-subject-box input[type="checkbox"]').forEach(cb => {
+        cb.checked = false;
+      });
+      ['opt-random', 'opt-wrong-only', 'opt-unsolved-only'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.checked = false;
+      });
+
+      window.updateMajorOptions();
+    };
+
+    // 教員画面：問題選択をすべてクリア
+    window.clearAllSearchedQuestions = () => {
+      selectedAssignQIds.clear();
+      window.renderAssignSearchList();
+    };
+
+    window.saveNewAssignment = async () => {
+      const title = document.getElementById('assign-title').value.trim();
+      const mode = document.getElementById('assign-mode').value;
+      const pubVal = document.getElementById('assign-publish-at').value;
+      const deadVal = document.getElementById('assign-deadline-at').value;
+
+      if (!title) { alert('課題タイトルを入力してください。'); return; }
+      if (!pubVal) { alert('公開開始日時を指定してください。'); return; }
+      if (selectedAssignQIds.size === 0) { alert('出題する問題を1問以上選択してください。'); return; }
+
+      await addDoc(collection(db, 'assignments'), {
+        title,
+        mode,
+        publishAt: new Date(pubVal).getTime(),
+        deadlineAt: deadVal ? new Date(deadVal).getTime() : null,
+        questionIds: [...selectedAssignQIds],
+        createdAt: Date.now()
+      });
+
+      alert(`課題「${title}」（${selectedAssignQIds.size}問）を登録しました！`);
+      document.getElementById('assign-title').value = '';
+      selectedAssignQIds.clear();
+      window.switchTeacherSubTab('manage-assign');
+    };
+
+    window.loadTeacherAssignments = async () => {
+      const container = document.getElementById('teacher-assignments-list');
+      container.innerHTML = '<p class="text-xs t-muted">読み込み中...</p>';
+
+      const snap = await getDocs(collection(db, 'assignments'));
+      cachedAssignments = [];
+      snap.forEach(d => cachedAssignments.push({ id: d.id, ...d.data() }));
+      cachedAssignments.sort((a, b) => b.publishAt - a.publishAt);
+
+      if (cachedAssignments.length === 0) {
+        container.innerHTML = '<p class="text-xs t-muted">作成済みの課題はありません。</p>';
+        return;
+      }
+
+      const now = Date.now();
+      container.innerHTML = cachedAssignments.map(a => {
+        const isPublished = now >= a.publishAt;
+        const pubStr = new Date(a.publishAt).toLocaleString('ja-JP', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        const statusTag = isPublished
+          ? '<span class="px-2 py-0.5 rounded text-xs font-bold bg-emerald-100 text-emerald-800">公開中</span>'
+          : `<span class="px-2 py-0.5 rounded text-xs font-bold bg-amber-100 text-amber-800">予約中 (${pubStr}公開)</span>`;
+
+        return `
+          <div class="t-sub border rounded-lg p-3.5 flex flex-wrap justify-between items-center gap-3">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                ${statusTag}
+                <span class="font-bold text-sm">${a.title}</span>
+              </div>
+              <div class="text-xs t-muted">問題数: ${a.questionIds.length}問 ／ 形式: ${a.mode === 'test' ? '小テスト' : '演習'}</div>
+            </div>
+            <div class="flex gap-2">
+              <button onclick="viewAssignmentSubmissions('${a.id}')" class="t-primary px-3 py-1.5 rounded text-xs font-bold">提出状況を見る</button>
+              <button onclick="deleteAssignment('${a.id}')" class="px-2.5 py-1.5 bg-rose-600 text-white rounded text-xs">削除</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    };
+
+    window.deleteAssignment = async (id) => {
+      if (!confirm('この課題を削除しますか？')) return;
+      await deleteDoc(doc(db, 'assignments', id));
+      window.loadTeacherAssignments();
+    };
+
+    window.viewAssignmentSubmissions = async (assignmentId) => {
+      const assign = cachedAssignments.find(a => a.id === assignmentId);
+      if (!assign) return;
+
+      const box = document.getElementById('teacher-submission-detail-box');
+      box.classList.remove('hidden');
+      document.getElementById('sub-detail-title').textContent = `提出状況: ${assign.title}`;
+      document.getElementById('sub-detail-meta').textContent = `全 ${assign.questionIds.length} 問`;
+
+      const usersSnap = await getDocs(collection(db, 'users'));
+      const students = [];
+      usersSnap.forEach(d => {
+        if (d.data().role === 'student') students.push({ uid: d.id, ...d.data() });
+      });
+      students.sort((a, b) => a.studentId.localeCompare(b.studentId));
+
+      const subsSnap = await getDocs(collection(db, 'submissions'));
+      const subMap = {};
+      subsSnap.forEach(d => {
+        if (d.data().assignmentId === assignmentId) subMap[d.data().uid] = d.data();
+      });
+
+      const rows = students.map(st => {
+        const s = subMap[st.uid];
+        if (s) {
+          const rate = Math.round((s.score / s.total) * 100);
+          const dateStr = new Date(s.submittedAt).toLocaleString('ja-JP', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+          return { studentId: st.studentId, name: st.name, status: '提出済', score: `${s.score}/${s.total}`, rate: `${rate}%`, date: dateStr };
+        } else {
+          return { studentId: st.studentId, name: st.name, status: '未提出', score: '-', rate: '-', date: '-' };
+        }
+      });
+
+      currentSubExportData = { title: assign.title, rows };
+      document.getElementById('sub-detail-tbody').innerHTML = rows.map(r => `
+        <tr>
+          <td class="p-3 font-mono font-bold">${r.studentId}</td>
+          <td class="p-3">${r.name}</td>
+          <td class="p-3"><span class="px-2 py-0.5 rounded text-xs font-bold ${r.status === '提出済' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">${r.status}</span></td>
+          <td class="p-3 text-right font-bold">${r.score}</td>
+          <td class="p-3 text-right">${r.rate}</td>
+          <td class="p-3 text-right text-xs t-muted">${r.date}</td>
+        </tr>
+      `).join('');
+    };
+
+    window.exportTeacherCSV = () => {
+      if (!teacherCachedRows.length) { alert('データがありません。'); return; }
+      const header = ['学籍番号', '氏名', '解答問題数', '正解数', '正答率(%)', '最弱中項目', '最終学習日時'];
+      const lines = [header.join(',')];
+      teacherCachedRows.forEach(r => lines.push([`"${r.studentId}"`, `"${r.name}"`, r.total, r.correct, r.rate, `"${r.weakestMinor}"`, `"${r.lastDate}"`].join(',')));
+      downloadCSV(`kokushi_all_${new Date().toISOString().slice(0,10)}.csv`, lines.join('\n'));
+    };
+
+    window.exportSubmissionCSV = () => {
+      if (!currentSubExportData.rows.length) return;
+      const header = ['学籍番号', '氏名', '状態', '得点', '正答率', '提出日時'];
+      const lines = [header.join(',')];
+      currentSubExportData.rows.forEach(r => lines.push([`"${r.studentId}"`, `"${r.name}"`, `"${r.status}"`, `"${r.score}"`, `"${r.rate}"`, `"${r.date}"`].join(',')));
+      downloadCSV(`kadai_${currentSubExportData.title}.csv`, lines.join('\n'));
+    };
+
+    function downloadCSV(filename, text) {
+      const bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
+      const blob = new Blob([bom, text], { type: 'text/csv;charset=utf-8;' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      a.click();
+    }
+  </script>
+</body>
+</html>
