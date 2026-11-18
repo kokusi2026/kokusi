@@ -984,8 +984,18 @@
       const container = document.getElementById('student-assignments-list');
       try {
         const snap = await getDocs(collection(db, 'assignments'));
+        const now = Date.now();
         const list = [];
-        snap.forEach(d => list.push({ id: d.id, ...d.data() }));
+        snap.forEach(d => {
+          const data = d.data();
+          const pubTime = typeof data.publishAt === 'number'
+            ? data.publishAt
+            : (data.publishAt?.toMillis ? data.publishAt.toMillis() : 0);
+          // 公開開始日時を過ぎている課題のみ表示する
+          if (now >= pubTime) {
+            list.push({ id: d.id, ...data, publishAt: pubTime });
+          }
+        });
         list.sort((a, b) => b.publishAt - a.publishAt);
 
         if (list.length === 0) {
@@ -1000,8 +1010,7 @@
           if (data.uid === currentUser.uid) mySubs[data.assignmentId] = data;
         });
 
-        const now = Date.now();
-        container.innerHTML = list.map(a => {
+          container.innerHTML = list.map(a => {
           const sub = mySubs[a.id];
           const isExpired = a.deadlineAt && now > a.deadlineAt;
           const deadlineText = a.deadlineAt
